@@ -21,7 +21,7 @@ public:
 
     ~ScannerModule() {
         gui::menu.removeEntry(name);
-        stop();
+        HPstop();
     }
 
     void postInit() {}
@@ -38,7 +38,7 @@ public:
         return enabled;
     }
 
-private:
+
     static void menuHandler(void* ctx) {
         ScannerModule* _this = (ScannerModule*)ctx;
         float menuWidth = ImGui::GetContentRegionAvail().x;
@@ -100,13 +100,13 @@ private:
 
         if (!_this->running) {
             if (ImGui::Button("Start##scanner_start", ImVec2(menuWidth, 0))) {
-                _this->start();
+                _this->HPstart();
             }
             ImGui::Text("Status: Idle");
         }
         else {
             if (ImGui::Button("Stop##scanner_start", ImVec2(menuWidth, 0))) {
-                _this->stop();
+                _this->HPstop();
             }
             if (_this->receiving) {
                 ImGui::TextColored(ImVec4(0, 1, 0, 1), "Status: Receiving");
@@ -120,14 +120,14 @@ private:
         }
     }
 
-    void start() {
+    void HPstart() {
         if (running) { return; }
         current = startFreq;
         running = true;
         workerThread = std::thread(&ScannerModule::worker, this);
     }
 
-    void stop() {
+    void HPstop() {
         if (!running) { return; }
         running = false;
         if (workerThread.joinable()) {

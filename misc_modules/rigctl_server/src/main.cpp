@@ -10,6 +10,7 @@
 #include <config.h>
 #include <cctype>
 #include <radio_interface.h>
+#include "../../scanner/src/scanner.h"
 #define CONCAT(a, b) ((std::string(a) + b).c_str())
 
 #define MAX_COMMAND_LENGTH 8192
@@ -349,7 +350,6 @@ private:
         std::vector<std::string> parts;
         bool lastWasSpace = false;
         std::string resp = "";
-
         // Split command into parts and remove excess spaces
         for (char c : cmd) {
             if (lastWasSpace && c == ' ') { continue; }
@@ -663,6 +663,11 @@ private:
         else if (parts[0] == "\\get_powerstat") {
             resp = "1\n";
             client->write(resp.size(), (uint8_t*)resp.c_str());
+        }
+        else if(parts[0] == "scanner" && parts[1] == "start"){
+            HPstart()
+        }else if(parts[0] == "scanner" && parts[1] == "stop"){
+            HPstop()
         }
         else {
             // If command is not recognized, return error
