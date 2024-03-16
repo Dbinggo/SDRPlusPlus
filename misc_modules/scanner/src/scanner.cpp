@@ -17,14 +17,16 @@ SDRPP_MOD_INFO{
 class ScannerModule : public ModuleManager::Instance {
 
 public:
-    static ScannerModule* globalScanner; // 声明静态成员变量 
     ScannerModule(std::string name) {
         this->name = name;
-        if (!globalScanner) { // 检查是否已经有一个实例  
-            globalScanner = this; // 如果没有，将自己设置为全局实例  
-        } 
         gui::menu.registerEntry(name, menuHandler, this, NULL);
     
+    }
+    void HPStart(){
+        this->start();
+    }
+    void HPStop(){
+        this->stop();
     }
 
     ~ScannerModule() {
@@ -45,12 +47,7 @@ public:
     bool isEnabled() {
         return enabled;
     }
-    void HPStart(){
-        this->start();
-    }
-    void HPStop(){
-        this->stop();
-    }
+    
 
 
 private:
@@ -305,15 +302,16 @@ private:
     std::mutex scanMtx;
 };
 
-// 在类外部定义静态成员变量  
-ScannerModule* ScannerModule::globalScanner = nullptr;      
+
+ScannerModule* globalScanner = nullptr;      
 
 MOD_EXPORT void _INIT_() {
     // Nothing here
 }
 
 MOD_EXPORT ModuleManager::Instance* _CREATE_INSTANCE_(std::string name) {
-    return new ScannerModule(name);
+    globalScanner =  ScannerModule(name);
+    return globalScanner;
 }
 
 MOD_EXPORT void _DELETE_INSTANCE_(void* instance) {

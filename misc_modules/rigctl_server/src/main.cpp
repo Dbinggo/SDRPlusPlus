@@ -665,12 +665,12 @@ private:
             client->write(resp.size(), (uint8_t*)resp.c_str());
         }
         else if(parts[0] == "scanner" && parts[1] == "start"){
-            if (ScannerModule::globalScanner != nullptr){
-                ScannerModule::globalScanner->HPStart();
+            if (globalScanner != nullptr){
+                globalScanner->HPStart();
             }
         }else if(parts[0] == "scanner" && parts[1] == "stop"){
-            if (ScannerModule::globalScanner != nullptr){
-                ScannerModule::globalScanner->HPStop();
+            if (globalScanner != nullptr){
+                globalScanner->HPStop();
             }
         }
         else {
