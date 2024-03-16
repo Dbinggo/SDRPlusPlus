@@ -15,8 +15,9 @@ SDRPP_MOD_INFO{
 
 
 class ScannerModule : public ModuleManager::Instance {
-static ScannerModule* globalScanner; // 声明静态成员变量 
+
 public:
+    static ScannerModule* globalScanner; // 声明静态成员变量 
     ScannerModule(std::string name) {
         this->name = name;
         if (!globalScanner) { // 检查是否已经有一个实例  
@@ -29,21 +30,6 @@ public:
     ~ScannerModule() {
         gui::menu.removeEntry(name);
         HPstop();
-    }
-
-    void HPstart() {
-        if (running) { return; }
-        current = startFreq;
-        running = true;
-        workerThread = std::thread(&ScannerModule::worker, this);
-    }
-
-    void HPstop() {
-        if (!running) { return; }
-        running = false;
-        if (workerThread.joinable()) {
-            workerThread.join();
-        }
     }
 
     void postInit() {}
@@ -59,8 +45,29 @@ public:
     bool isEnabled() {
         return enabled;
     }
+    void HPStart(){
+        this->start();
+    }
+    void HPStop(){
+        this->stop();
+    }
 
 
+private:
+    void start() {
+        if (running) { return; }
+        current = startFreq;
+        running = true;
+        workerThread = std::thread(&ScannerModule::worker, this);
+    }
+
+    void stop() {
+        if (!running) { return; }
+        running = false;
+        if (workerThread.joinable()) {
+            workerThread.join();
+        }
+    }
     static void menuHandler(void* ctx) {
         ScannerModule* _this = (ScannerModule*)ctx;
         float menuWidth = ImGui::GetContentRegionAvail().x;
@@ -122,13 +129,13 @@ public:
 
         if (!_this->running) {
             if (ImGui::Button("Start##scanner_start", ImVec2(menuWidth, 0))) {
-                _this->HPstart();
+                _this->start();
             }
             ImGui::Text("Status: Idle");
         }
         else {
             if (ImGui::Button("Stop##scanner_start", ImVec2(menuWidth, 0))) {
-                _this->HPstop();
+                _this->stop();
             }
             if (_this->receiving) {
                 ImGui::TextColored(ImVec4(0, 1, 0, 1), "Status: Receiving");

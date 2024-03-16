@@ -670,7 +670,7 @@ private:
             }
         }else if(parts[0] == "scanner" && parts[1] == "stop"){
             if (ScannerModule::globalScanner != nullptr){
-                ScannerModule::globalScanner->HPstop();
+                ScannerModule::globalScanner->HPstop();S
             }
         }
         else {

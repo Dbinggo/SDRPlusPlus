@@ -7,10 +7,15 @@
 class ScannerModule : public ModuleManager::Instance {  
 public:  
     ScannerModule(std::string name);  
+   
+    static ScannerModule* globalScanner; 
+
+    void HPStop();
+    void HPStart();
+
+private:
     void HPstop();
     void HPstart();
-    static ScannerModule* globalScanner; 
-  
   
    
 };  
