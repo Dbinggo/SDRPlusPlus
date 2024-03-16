@@ -14,8 +14,8 @@ public:
     void HPStart();
 
 private:
-    void HPstop();
-    void HPstart();
+    void stop();
+    void Pstart();
   
    
 };  
