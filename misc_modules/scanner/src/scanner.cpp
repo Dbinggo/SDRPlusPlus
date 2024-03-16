@@ -12,16 +12,35 @@ SDRPP_MOD_INFO{
     /* Max instances    */ 1
 };
 
+ScannerModule* globalScanner = nullptr;
+
 class ScannerModule : public ModuleManager::Instance {
 public:
     ScannerModule(std::string name) {
         this->name = name;
+        globalScanner = this;
         gui::menu.registerEntry(name, menuHandler, this, NULL);
+    
     }
 
     ~ScannerModule() {
         gui::menu.removeEntry(name);
         HPstop();
+    }
+
+    void HPstart() {
+        if (running) { return; }
+        current = startFreq;
+        running = true;
+        workerThread = std::thread(&ScannerModule::worker, this);
+    }
+
+    void HPstop() {
+        if (!running) { return; }
+        running = false;
+        if (workerThread.joinable()) {
+            workerThread.join();
+        }
     }
 
     void postInit() {}
@@ -120,20 +139,7 @@ public:
         }
     }
 
-    void HPstart() {
-        if (running) { return; }
-        current = startFreq;
-        running = true;
-        workerThread = std::thread(&ScannerModule::worker, this);
-    }
 
-    void HPstop() {
-        if (!running) { return; }
-        running = false;
-        if (workerThread.joinable()) {
-            workerThread.join();
-        }
-    }
 
     void worker() {
         // 10Hz scan loop
