@@ -29,7 +29,7 @@ public:
 
     ~ScannerModule() {
         gui::menu.removeEntry(name);
-        HPstop();
+        stop();
     }
 
     void postInit() {}
