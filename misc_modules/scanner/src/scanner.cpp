@@ -12,13 +12,16 @@ SDRPP_MOD_INFO{
     /* Max instances    */ 1
 };
 
-ScannerModule* globalScanner = nullptr;
+
 
 class ScannerModule : public ModuleManager::Instance {
+static ScannerModule* globalScanner; // 声明静态成员变量 
 public:
     ScannerModule(std::string name) {
         this->name = name;
-        globalScanner = this;
+        if (!globalScanner) { // 检查是否已经有一个实例  
+            globalScanner = this; // 如果没有，将自己设置为全局实例  
+        } 
         gui::menu.registerEntry(name, menuHandler, this, NULL);
     
     }
@@ -294,6 +297,9 @@ public:
     std::thread workerThread;
     std::mutex scanMtx;
 };
+
+// 在类外部定义静态成员变量  
+ScannerModule* ScannerModule::globalScanner = nullptr;      
 
 MOD_EXPORT void _INIT_() {
     // Nothing here

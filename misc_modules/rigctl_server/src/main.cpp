@@ -665,9 +665,13 @@ private:
             client->write(resp.size(), (uint8_t*)resp.c_str());
         }
         else if(parts[0] == "scanner" && parts[1] == "start"){
-            globalScanner->HPstart();
+            if (ScannerModule::globalScanner != nullptr){
+                ScannerModule::globalScanner->HPstart();
+            }
         }else if(parts[0] == "scanner" && parts[1] == "stop"){
-            globalScanner->HPstop();
+            if (ScannerModule::globalScanner != nullptr){
+                ScannerModule::globalScanner->HPstop();
+            }
         }
         else {
             // If command is not recognized, return error
