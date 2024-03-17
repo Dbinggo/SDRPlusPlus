@@ -9,11 +9,8 @@ public:
 
     static ScannerModule* globalScanner; 
     ScannerModule(std::string name);  
-   
-    
-
     void HPStop();
-    void HPStart();
+     void HPStart();
 
 private:
     void stop();

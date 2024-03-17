@@ -78,7 +78,7 @@ ModuleManager::Module_t ModuleManager::loadModule(std::string path) {
             return _mod;
         }
     }
-    mod.init();
+    mod.init(); 
     modules[mod.info->name] = mod;
     return mod;
 }

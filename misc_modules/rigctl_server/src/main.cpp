@@ -10,7 +10,7 @@
 #include <config.h>
 #include <cctype>
 #include <radio_interface.h>
-#include "../../scanner/src/scanner.h"
+#include "scanner.h"
 #define CONCAT(a, b) ((std::string(a) + b).c_str())
 
 #define MAX_COMMAND_LENGTH 8192
@@ -373,7 +373,7 @@ private:
         if (parts.size() == 0) { return; }
 
         // If the command is a compound command, execute each one separately
-        if (parts[0].size() > 1 && parts[0][0] != '\\' && parts[0] != "AOS" && parts[0] != "LOS") {
+        if (parts[0].size() > 1 && parts[0][0] != '\\' && parts[0] != "AOS" && parts[0] != "LOS" && parts[0] != "scanner") {
             std::string arguments;
             if (parts.size() > 1) { arguments = cmd.substr(parts[0].size()); }
             for (char c : parts[0]) {
@@ -665,12 +665,14 @@ private:
             client->write(resp.size(), (uint8_t*)resp.c_str());
         }
         else if(parts[0] == "scanner" && parts[1] == "start"){
-            if ( ScannerModule::globalScanner != nullptr){
-                ScannerModule::globalScanner->HPStart();
+            ScannerModule* scanner = ScannerModule::globalScanner;
+            if ( scanner != nullptr){
+                scanner->HPStart();
             }
         }else if(parts[0] == "scanner" && parts[1] == "stop"){
-            if (ScannerModule::globalScanner != nullptr){
-                ScannerModule::globalScanner->HPStop();
+             ScannerModule* scanner = ScannerModule::globalScanner;
+            if (scanner != nullptr){
+                scanner->HPStop();
             }
         }
         else {
