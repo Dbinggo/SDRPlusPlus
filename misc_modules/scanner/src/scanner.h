@@ -6,14 +6,21 @@
 
 class ScannerModule : public ModuleManager::Instance {  
 public:  
+
+    static ScannerModule* globalScanner; 
     ScannerModule(std::string name);  
+   
+    
+
     void HPStop();
     void HPStart();
 
 private:
     void stop();
-    void start(); 
+    void start();
+  
+   
 };  
-extern ScannerModule* globalScanner
+
   
 #endif // SCANNERMODULE_H
