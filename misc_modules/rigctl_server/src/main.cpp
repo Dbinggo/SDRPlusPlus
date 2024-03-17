@@ -10,7 +10,7 @@
 #include <config.h>
 #include <cctype>
 #include <radio_interface.h>
-#include "scanner.h"
+#include <scanner.h>
 #define CONCAT(a, b) ((std::string(a) + b).c_str())
 
 #define MAX_COMMAND_LENGTH 8192
