@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.13)
 project(scanner)
 
 file(GLOB SRC "src/*.cpp")
-file(GLOB SRC "src/*.h")
 
 include(${SDRPP_MODULE_CMAKE})
 
