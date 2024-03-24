@@ -271,6 +271,10 @@ if (OPT_BUILD_RECORDER)
 add_subdirectory("misc_modules/recorder")
 endif (OPT_BUILD_RECORDER)
 
+if (OPT_BUILD_RECORDER)
+add_subdirectory("misc_modules/scanner")
+endif (OPT_BUILD_RECORDER)
+
 if (OPT_BUILD_RIGCTL_CLIENT)
 add_subdirectory("misc_modules/rigctl_client")
 endif (OPT_BUILD_RIGCTL_CLIENT)
