@@ -283,9 +283,6 @@ if (OPT_BUILD_RIGCTL_SERVER)
 add_subdirectory("misc_modules/rigctl_server")
 endif (OPT_BUILD_RIGCTL_SERVER)
 
-if (OPT_BUILD_SCANNER)
-add_subdirectory("misc_modules/scanner")
-endif (OPT_BUILD_SCANNER)
 
 if (OPT_BUILD_SCHEDULER)
 add_subdirectory("misc_modules/scheduler")
