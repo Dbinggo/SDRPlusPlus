@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 project(rigctl_server)
 
-file(GLOB SRC "src/*.cpp" "../scanner/src/scanner.cpp")
+file(GLOB SRC "src/*.cpp")
 
 
 include(${SDRPP_MODULE_CMAKE})
