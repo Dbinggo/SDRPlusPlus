@@ -1,22 +1,29 @@
 #ifndef HPSCANNER  
 #define HPSCANNER  
   
-#include <string>  
-#include <module.h> // 确保这个头文件包含了ModuleManager::Instance的定义  
+#include <imgui.h>
+#include <module.h>
+#include <gui/gui.h>
+#include <gui/style.h>
+#include <signal_path/signal_path.h> 
 
 class ScannerModule : public ModuleManager::Instance {  
-public:  
+    
+    public:  
+        static ScannerModule* globalScanner; 
+        ScannerModule(std::string name);  
+        ~ScannerModule();
+        void postInit();
+        void enable();
+        void disable();
+        bool isEnabled();
+        void HPStop();
+        void HPStart();
 
-    static ScannerModule* globalScanner; 
-    ScannerModule(std::string name);  
-    void HPStop();
-     void HPStart();
-
-private:
-    void stop();
-    void start();
-  
-   
+    private:
+        void stop();
+        void start();
+        void menuHandler(void* ctx)
 };  
 
   
