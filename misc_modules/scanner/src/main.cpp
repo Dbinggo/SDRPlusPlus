@@ -66,7 +66,7 @@ void ScannerModule::stop() {
         workerThread.join();
     }
 }
-static void ScannerModule::menuHandler(void* ctx) {
+void ScannerModule::menuHandler(void* ctx) {
     ScannerModule* _this = (ScannerModule*)ctx;
     float menuWidth = ImGui::GetContentRegionAvail().x;
     
