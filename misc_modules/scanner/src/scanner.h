@@ -27,6 +27,22 @@ private:
     float getMaxLevel(float* data, double freq, double width, int dataWidth, double wfStart, double wfWidth);
 
     std::string name;
+    bool enabled = true;
+    
+    bool running = false;
+    //std::string selectedVFO = "Radio";
+    double startFreq = 88000000.0;
+    double stopFreq = 108000000.0;
+    double interval = 100000.0;
+    double current = 88000000.0;
+    double passbandRatio = 10.0;
+    int tuningTime = 250;
+    int lingerTime = 1000.0;
+    float level = -50.0;
+    bool receiving = true;
+    bool tuning = false;
+    bool scanUp = true;
+    bool reverseLock = false;
     std::chrono::time_point<std::chrono::high_resolution_clock> lastSignalTime;
     std::chrono::time_point<std::chrono::high_resolution_clock> lastTuneTime;
     std::thread workerThread;
