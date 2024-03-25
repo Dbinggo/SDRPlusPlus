@@ -5,5 +5,4 @@ file(GLOB SRC "src/*.cpp")
 
 include(${SDRPP_MODULE_CMAKE})
 
-add_executable(scanner ${SRC})
 target_include_directories(scanner PRIVATE "src/")
