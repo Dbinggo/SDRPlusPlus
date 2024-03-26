@@ -6,6 +6,7 @@ file(GLOB SRC "src/*.cpp")
 
 include(${SDRPP_MODULE_CMAKE})
 
+target_link_libraries(rigctl_server PRIVATE scanner)
 
 target_include_directories(rigctl_server PRIVATE "src/")
 target_include_directories(rigctl_server PRIVATE "../recorder/src")
